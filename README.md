@@ -12,6 +12,6 @@ This code is designed to efficiently predict and plan large numbers of exoplanet
 
 ## Disclaimer
 
-Although this code is designed to provide reliable predictions of observation visibility, always independently verify observing windows using the [NASA Transit and Ephemeris Service](https://transitpredictor.stsci.edu/) before scheduling or conducting observations.
+Although this code is designed to provide reliable predictions of observation visibility, always independently verify observing windows using the NASA Transit and Ephemeris Service before scheduling or conducting observations.
 
 Actual observability may depend on additional instrument, telescope, and observing-condition constraints that are not captured by this code.
