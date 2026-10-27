@@ -1,7 +1,7 @@
 
 # Exoplanet Observation Visibility Predictor
 
-This code is designed to efficiently predict and plan large numbers of exoplanet transit and emission-phase observations simultaneously. It is intended primarily for large-scale survey planning at ground-based, high-resolution spectroscopic observatories.
+This code is designed to efficiently predict and plan large numbers of exoplanet transit and emission-phase observations simultaneously. It is intended primarily for large-scale survey planning at ground-based, high-resolution spectroscopic observatories. 
 
 ## Features
 
@@ -15,3 +15,7 @@ This code is designed to efficiently predict and plan large numbers of exoplanet
 Although this code is designed to provide reliable predictions of observation visibility, always independently verify observing windows using the NASA Transit and Ephemeris Service before scheduling or conducting observations.
 
 Actual observability may depend on additional instrument, telescope, and observing-condition constraints that are not captured by this code.
+
+
+The code uses astropy's location so the supported observatory names can be found here:
+https://github.com/astropy/astropy-data/blob/gh-pages/coordinates/sites.json?utm_source=chatgpt.com
