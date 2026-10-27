@@ -17,5 +17,5 @@ Although this code is designed to provide reliable predictions of observation vi
 Actual observability may depend on additional instrument, telescope, and observing-condition constraints that are not captured by this code.
 
 
-The code uses astropy's location so the supported observatory names can be found here:
-https://github.com/astropy/astropy-data/blob/gh-pages/coordinates/sites.json?utm_source=chatgpt.com
+The code uses astropy's location, so the supported observatory names can be found here:
+https://github.com/astropy/astropy-data/blob/gh-pages/coordinates/sites.json
