@@ -10,7 +10,7 @@ This code is designed to efficiently predict and plan large numbers of exoplanet
 - **Lunar constraints:** Account for Moon illumination when selecting viable observing windows.
 - **Flexible observation coverage:** Add extra observing hours before or after an observation to extend the coverage window.
 
-## Disclaimer
+## Disclaimers
 
 Although this code is designed to provide reliable predictions of observation visibility, always independently verify observing windows using the NASA Transit and Ephemeris Service before scheduling or conducting observations.
 
@@ -19,3 +19,7 @@ Actual observability may depend on additional instrument, telescope, and observi
 
 The code uses astropy's location, so the supported observatory names can be found here:
 https://github.com/astropy/astropy-data/blob/gh-pages/coordinates/sites.json
+
+The Sun altitude restriction is sun_alt_start < -10 for the start and end of the observation. This allows observations during twilight. THIS MIGHT NEED TO BE CHANGED BASED ON THE TELESCOPE AND THE TARGET.
+
+The planet's coordinates are pulled from the NASA archive. Planet name needs to be the same as the NASA Archvie
