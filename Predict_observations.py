@@ -58,13 +58,30 @@ def predict_transits(planet_name, start_date, end_date, telescope_location, base
     table = NasaExoplanetArchive.query_object(planet_name, table="pscomppars")
     if T0 is None:
         T0 = table["pl_tranmid"][0].value  # Mid-transit time (BJD)
+        print('T0 is',T0)
     if P is None:
         P = table["pl_orbper"][0].value  # Orbital period
+        print('P is',P)
     if D is None:
         D = table["pl_trandur"][0].value / 24.0
+        print('Duration is',D*24)
 
     # Define the planet's sky coordinates
-    planet = SkyCoord.from_name(planet_name)
+    # planet = SkyCoord.from_name(planet_name)
+    ra = table["ra"][0].value    # Right ascension (degrees)
+    dec = table["dec"][0].value  # Declination (degrees)
+    
+    ra = table["ra"][0].value    # Right ascension (degrees)
+    dec = table["dec"][0].value  # Declination (degrees)
+
+    planet = SkyCoord(ra=ra * u.deg, dec=dec * u.deg, frame="icrs")
+    
+    ra_sexagesimal = planet.ra.to_string(unit=u.hourangle, sep=":", precision=2, pad=True)
+    dec_sexagesimal = planet.dec.to_string(unit=u.deg, sep=":", precision=2, pad=True, alwayssign=True)
+
+    print(f"Coordinates are RA: {ra_sexagesimal}, Dec: {dec_sexagesimal}")    # print('coordinate are',ra,dec)
+
+    # planet = SkyCoord(ra=ra * u.deg, dec=dec * u.deg, frame="icrs")
 
     # Convert start and end dates to JD
     start_jd = Time(start_date).jd
@@ -119,7 +136,7 @@ def predict_transits(planet_name, start_date, end_date, telescope_location, base
         end_airmass = planet_altaz_end.secz
 
         if mid_airmass > 0 and planet_altaz_start.alt > 0 * u.deg and planet_altaz_mid.alt > 0 * u.deg \
-                and planet_altaz_end.alt > 0 * u.deg and sun_alt_start < -12 * u.deg and sun_alt_end < -12 * u.deg and moon_illumination >= moon_restriction:
+                and planet_altaz_end.alt > 0 * u.deg and sun_alt_start < -10 * u.deg and sun_alt_end < -10 * u.deg and moon_illumination >= moon_restriction:
             if mid_airmass < airmass_limit and start_airmass < airmass_limit and end_airmass < airmass_limit:
                 visible_transits.append((time_start.datetime, time_mid.datetime, time_end.datetime, mid_airmass,moon_illumination))
                 start_times_utc.append(time_start.datetime)
@@ -228,7 +245,7 @@ def predict_transits(planet_name, start_date, end_date, telescope_location, base
             airmasses[airmasses <= 0] = np.nan
 
             # Standard airmass plot: 1.0 at the top
-            max_airmass = 2.2
+            max_airmass = 1.5
             fig, ax = plt.subplots(figsize=(10, 6))
             ax.set_ylim(max_airmass, 0.9)
 
@@ -329,17 +346,32 @@ Notes:
     
     # Query NASA Exoplanet Archive for the planet's data
     table = NasaExoplanetArchive.query_object(planet_name, table="pscomppars")
+
+    print('For planet',planet_name,'the following parameters are used:')
     
     if T0 is None:
         T0 = table["pl_tranmid"][0].value  # Mid-transit time (BJD)
+        print('T0 is',T0)
     if P is None:
         P = table["pl_orbper"][0].value  # Orbital period
+        print('P is',P)
     if D is None:
-        D = table["pl_trandur"][0].value / 24.0  # Transit duration in days
-        # print('transit diration',D)
-    
+        D = table["pl_trandur"][0].value / 24.0
+        print('D is',D)
+
     # Define the planet's sky coordinates
-    planet = SkyCoord.from_name(planet_name)
+    # planet = SkyCoord.from_name(planet_name)
+    
+    ra = table["ra"][0].value    # Right ascension (degrees)
+    dec = table["dec"][0].value  # Declination (degrees)
+
+    planet = SkyCoord(ra=ra * u.deg, dec=dec * u.deg, frame="icrs")
+    
+    ra_sexagesimal = planet.ra.to_string(unit=u.hourangle, sep=":", precision=2, pad=True)
+    dec_sexagesimal = planet.dec.to_string(unit=u.deg, sep=":", precision=2, pad=True, alwayssign=True)
+
+    print(f"Coordinates are RA: {ra_sexagesimal}, Dec: {dec_sexagesimal}")    # print('coordinate are',ra,dec)
+
 
     # Convert start and end dates to JD
     start_jd = Time(start_date).jd
@@ -390,7 +422,7 @@ Notes:
         # print(f"Moon illumination at mid-transit: {moon_illumination:.2f}", f"{mid_transit_utc.strftime('%Y-%m-%d %H:%M:%S')} UTC |")
 
 
-        if mid_airmass > 0 and planet_altaz_start.alt > 0 * u.deg and planet_altaz_mid.alt > 0 * u.deg and planet_altaz_end.alt > 0 * u.deg and sun_alt_start < -12 * u.deg and sun_alt_end < -12 * u.deg and moon_illumination >= moon_restriction:
+        if mid_airmass > 0 and planet_altaz_start.alt > 0 * u.deg and planet_altaz_mid.alt > 0 * u.deg and planet_altaz_end.alt > 0 * u.deg and sun_alt_start < -10 * u.deg and sun_alt_end < -10 * u.deg and moon_illumination >= moon_restriction:
             if mid_airmass < airmass_limit and start_airmass < airmass_limit and end_airmass < airmass_limit:
                 visible_phases.append((time_start.datetime, time_mid.datetime, time_end.datetime, mid_airmass,moon_illumination))
     
